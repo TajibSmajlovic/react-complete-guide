@@ -5,22 +5,10 @@ import Person from './Person/Person'
 class App extends Component {
   state = {
     persons: [
-        { name: 'Tajib', age: 24 },
-        { name: 'Hasan', age: 17 },
-        { name: 'Kemal', age: 56 }
+        { id: 'jen', name: 'Tajib', age: 24 },
+        { id: 'dva', name: 'Hasan', age: 17 },
+        { id: 'tri', name: 'Kemal', age: 56 }
     ]
-  }
-
-  switchNameHandler = (newName) => {
-    this.setState({
-        persons: [
-            { name: newName, age: 24 },
-            { name: 'Hasan', age: 17 },
-            { name: 'Kemal', age: 59 }
-        ],
-        otherState: 'some other value',
-        showPersons: false
-    } )
   }
 
   nameChangedHandler = (event) => {
@@ -31,6 +19,13 @@ class App extends Component {
               { name: 'Kemal', age: 56 }
           ]
       } )
+  }
+
+  deletePersonHandler = (personIndex) => {
+      // const persons = this.state.persons.slice()
+      const persons = [...this.state.persons]
+      persons.splice(personIndex, 1)
+      this.setState({persons})
   }
 
     togglePersonHandler = () => {
@@ -52,17 +47,7 @@ class App extends Component {
         if ( this.state.showPersons ) {
             persons = (
                 <div>
-                    <Person
-                        name = {this.state.persons[0].name}
-                        age = {this.state.persons[0].age}/>
-                    <Person
-                        name = {this.state.persons[1].name}
-                        age = {this.state.persons[1].age}
-                        click = {this.switchNameHandler.bind(this, 'Smajke')}
-                        change = {this.nameChangedHandler}> Testing of other things </Person>
-                    <Person
-                        name = {this.state.persons[2].name}
-                        age = {this.state.persons[2].age}/>
+                    {this.state.persons.map((person, index) => <Person click={() => this.deletePersonHandler(index)} name={person.name} age={person.age} key={person.id}/>)}
                 </div>
             )
         }
