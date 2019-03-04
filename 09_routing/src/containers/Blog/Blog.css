@@ -14,12 +14,9 @@
 .Blog a {
     text-decoration: none;
     color: black;
-    font-size: 28px;
-    font-weight: 700;
 }
 
 .Blog a:hover,
 .Blog a:active {
-    color: white;
-    background-color: rgba(5,25,128,0.81);
+    color: #fa923f;
 }
