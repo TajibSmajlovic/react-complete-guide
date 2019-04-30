@@ -13,9 +13,7 @@ export const setIngredients = (ingredients) => {
 }
 
 export const fetchIngredientsFailed = () => {
-	return {type: actionTypes.FETCH_INGREDIENTS_FAILED
-
-	}
+	return {type: actionTypes.FETCH_INGREDIENTS_FAILED}
 
 }
 
@@ -23,6 +21,7 @@ export const initIngredients = () => {
 	return dispatch => {
 		axios.get( 'https://myburgerbuilder-smajke.firebaseio.com/ingredients.json' )
 			.then( response => {
+				console.log(response)
 				dispatch(setIngredients(response.data))
 			} )
 			.catch( error => {
