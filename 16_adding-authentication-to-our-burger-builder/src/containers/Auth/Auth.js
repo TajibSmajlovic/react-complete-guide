@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from "react-router-dom";
 
 import styles from './Auth.module.css'
 import Input from '../../components/UI/Input/Input'
@@ -126,6 +127,10 @@ import * as actions from '../../store/actions/index'
 			)
 		}
 
+		if (this.props.isAuthenticated) {
+			return <Redirect to='/'/>
+		}
+
 		return (<div className={styles.Auth}>
 			{errorMessage}
 			<form onSubmit={this.submitHandler}>
@@ -140,7 +145,8 @@ import * as actions from '../../store/actions/index'
 const mapStatetoProps = state => {
 	return {
 		loading: state.auth.loading,
-		error: state.auth.error
+		error: state.auth.error,
+		isAuthenticated: state.auth.token !== null
 	}
 }
 
