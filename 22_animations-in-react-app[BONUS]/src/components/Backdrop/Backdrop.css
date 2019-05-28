@@ -1,0 +1,20 @@
+.Backdrop {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    transition: all 1.3s ease-out;
+}
+
+.BackdropOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.BackdropClosed {
+    opacity: 0;
+    transform: translateY(-100%);
+}
