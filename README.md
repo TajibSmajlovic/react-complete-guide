@@ -1,4 +1,5 @@
-### start date: december 04 2018 
+## start date: december 04 2018 
+## end date: may 30 2019 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
