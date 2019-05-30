@@ -1,14 +1,19 @@
 import axios from 'axios'
-import { put, delay } from 'redux-saga/effects'
+import { put, delay, call } from 'redux-saga/effects'
 
 import * as actionTypes from '../actions/actionTypes'
 import * as actions from '../actions/index'
 import {authFail, authStart, authSuccess, checkAuthTimeout} from "../actions/auth";
 
 export function* logoutSaga(action) {
-	yield localStorage.removeItem('token')
+	yield call([localStorage, 'removeItem'], 'token')
+	yield call([localStorage, 'removeItem'], 'expirationDate')
+	yield call([localStorage, 'removeItem'], 'userID')
+
+	/*yield localStorage.removeItem('token')
 	yield localStorage.removeItem('expirationDate')
-	yield localStorage.removeItem('userID')
+	yield localStorage.removeItem('userID')*/
+
 	yield put(actions.logoutSucceed())
 }
 
@@ -41,5 +46,21 @@ export function* authUserSaga(action) {
 		yield put(actions.checkAuthTimeout(response.data.expiresIn))
 	} catch (err) {
 		yield put(authFail(err.response.data.error))
+	}
+}
+
+export function* authCheckStateSaga(action) {
+	const token = yield localStorage.getItem('token')
+	if (!token) {
+		yield put(actions.logOut())
+	} else {
+		const expirationTime = yield new Date(localStorage.getItem('expirationDate'))
+		if (expirationTime <= new Date()) {
+			yield put(actions.logOut())
+		} else {
+			const userID = yield localStorage.getItem('userID')
+			yield put(authSuccess(token, userID))
+			yield put(actions.checkAuthTimeout((expirationTime.getTime() - new Date().getTime()) / 1000 ));
+		}
 	}
 }

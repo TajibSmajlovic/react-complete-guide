@@ -55,6 +55,8 @@ export class BurgerBuilder extends Component {
     }
 
     render () {
+
+    	console.log(this.props.isAuthenticated)
         const disabledInfo = {
             ...this.props.ings
         };
